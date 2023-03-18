@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-deployment
+  labels:
+    app: mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      volumes:
+      - name: db-volume
+        hostPath:
+          path: /data/db
+      containers:
+      - name: mongo
+        image: ndeshmu2/cloud1:v1
+        ports:
+          - containerPort: 27017
+        volumeMounts:
+        - mountPath: /data/db
+          name: db-volume
+
+
+
